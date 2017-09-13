@@ -81,7 +81,7 @@ public class Landkarte {
 		//Am ende des Algorthmus einen Teleporter hinzufuegen
 		//addRoomToArray(aktuellerRaum, new Teleporter("Raum_"+i));
 		
-		this.displayMap();
+		//this.displayMap();
 	}
 	
 	private Raum addRoomToArray(Raum aktuellerRaum, Raum nachfolgeRaum) {
