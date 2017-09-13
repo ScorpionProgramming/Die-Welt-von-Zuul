@@ -54,50 +54,6 @@ public class Spiel
 		meinSpiel.spielen();
 
 	}
-    
-    /**
-     * Erzeuge alle Räume und verbinde ihre Ausgänge miteinander.
-     */
-//	private void raeumeAnlegen() // kann gelöscht werden
-//    {
-//        Raum draussen, hoersaal, cafeteria, labor, buero;
-//      
-//        // die Räume erzeugen
-//        draussen = new Raum("vor dem Haupteingang der Universität");
-//        hoersaal = new Raum("in einem Vorlesungssaal");
-//        cafeteria = new Raum("in der Cafeteria der Uni");
-//        labor = new Raum("in einem Rechnerraum");
-//        buero = new Raum("im Verwaltungsbüro der Informatik");
-//        
-//        // die Ausgänge initialisieren
-//        draussen.setAusgang("east", hoersaal);
-//        draussen.setAusgang("south", labor);
-//        draussen.setAusgang("west",cafeteria);
-//        hoersaal.setAusgang("west", draussen);
-//        cafeteria.setAusgang("east", draussen);
-//        labor.setAusgang("north",draussen);
-//        labor.setAusgang("east", buero);
-//        buero.setAusgang("west", labor);        
-//        
-//        //Räume mit Gegenstände versehen
-//        draussen.gegenstandAblegen(new Gegenstand("Gewehr","ein Maschinengewehr mit 100 Schuss", 9.5));
-//        draussen.gegenstandAblegen(new Gegenstand("Buch", "ein sehr altes Buch mit Ledereinband", 0.6));
-//        draussen.gegenstandAblegen(new Muffin("Muffin", "ein magischer Muffin", 0.1, 5.0));
-//        hoersaal.gegenstandAblegen(new Gegenstand("Schatz", "eine kleine Schatztruhe mit Münzen", 2.5));
-//        cafeteria.gegenstandAblegen(new Gegenstand("Pistole", "eine Pistole mit sechs Schuss", 0.5));
-//        labor.gegenstandAblegen(new Gegenstand("Nahrung", "ein Korb mit mehreren Fruchtsorten", 1.0));
-//        buero.gegenstandAblegen(new Gegenstand("Seil", "ein Seil der Länge 3m", 0.3));
-//        
-//        //Räume mit Monstern versehen
-//        cafeteria.setMonster(new Monster("Hugo"));
-//        labor.setMonster(new Monster());
-//
-//        //Initialisierung des Spielers
-//        spieler = new Spieler();
-//        
-//     // das Spiel startet draussen
-//        spieler.setAktuellerRaum(draussen);  
-//    }
 
     /**
      * Die Hauptmethode zum Spielen. Läuft bis zum Ende des Spiels
