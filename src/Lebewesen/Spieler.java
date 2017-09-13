@@ -1,4 +1,5 @@
 package Lebewesen;
+import java.util.ArrayList;
 import java.util.LinkedList;
 
 import Items.Gegenstand;
@@ -98,4 +99,15 @@ public class Spieler extends Lebewesen implements IKampfsystem{
 	public void verteidigen(Lebewesen lebewesen) {
 		// TODO verteidigen methode macht momentan nichts
 	}
+	
+	
+	/**
+	 * @author Pfaus
+	 * @return ArrayList mit Gegenstaenden
+	 * Gibt alle Gegenstaende in einer Linked List zurueck, die der Spieler bei sich trägt
+	 */
+	public LinkedList<Gegenstand> getAlleGegenstaende()
+    {
+    	return gegenstaende;
+    }
 }

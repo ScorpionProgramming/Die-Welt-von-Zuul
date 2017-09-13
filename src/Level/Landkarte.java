@@ -1,8 +1,7 @@
 package Level;
 
-import java.util.ArrayList;
-
 import Items.Gegenstand;
+import Items.Karte;
 import Items.Muffin;
 import Lebewesen.Monster;
 import Lebewesen.Spieler;
@@ -10,7 +9,7 @@ import Lebewesen.Spieler;
 public class Landkarte {
 
 	//ArrayList<Raum> raeume= new ArrayList<Raum>();
-	Raum[][] raum_begangen; // wird vom Algorithmus verwendet
+	Raum[][] map; // wird vom Algorithmus verwendet
 	
 	//startwert fuer die Raumgeneration
 	int 	x,
@@ -64,7 +63,7 @@ public class Landkarte {
 		
 		
 		// erstellt die groeﬂe des Raumes anhand des zufaelligen Wertes von 'max'
-		this.raum_begangen = new Raum[max][max];
+		this.map = new Raum[max][max];
 		
 
 		int maxRaeume = 8;//(int) ( Math.random() * 6 );
@@ -73,7 +72,7 @@ public class Landkarte {
 			if(i == 0) {
 				aktuellerRaum = new Teleporter("Raum_"+i);
 				//raeume.add(aktuellerRaum);
-				this.raum_begangen[x][y] = aktuellerRaum;
+				this.map[x][y] = aktuellerRaum;
 			}
 			
 			aktuellerRaum = addRoomToArray(aktuellerRaum, new Raum("Raum_"+i));
@@ -96,54 +95,54 @@ public class Landkarte {
 			//dann schauen ob der Raum noch nicht existiert
 			randRichtung = Math.random();
 			if(randRichtung < 0.25d && x+1 < max) {				//ost
-				if(this.raum_begangen[x+1][y] == null) {
-					this.raum_begangen[x+1][y] = nachfolgeRaum;
+				if(this.map[x+1][y] == null) {
+					this.map[x+1][y] = nachfolgeRaum;
 
 					aktuellerRaum.setAusgang("east", nachfolgeRaum);
 					nachfolgeRaum.setAusgang("west", aktuellerRaum);
 				}else {
-					nachfolgeRaum = this.raum_begangen[x+1][y];
+					nachfolgeRaum = this.map[x+1][y];
 
 					aktuellerRaum.setAusgang("east", nachfolgeRaum);
 					nachfolgeRaum.setAusgang("west", aktuellerRaum);
 				}
 				x++;
 			}else if(randRichtung < 0.5d && y+1 < max){ 						//sued
-				if(this.raum_begangen[x][y+1] == null) {
-					this.raum_begangen[x][y+1] = nachfolgeRaum;
+				if(this.map[x][y+1] == null) {
+					this.map[x][y+1] = nachfolgeRaum;
 
 					aktuellerRaum.setAusgang("south", nachfolgeRaum);
 					nachfolgeRaum.setAusgang("north", aktuellerRaum);
 				}else {
-					nachfolgeRaum = this.raum_begangen[x][y+1];
+					nachfolgeRaum = this.map[x][y+1];
 
 					aktuellerRaum.setAusgang("south", nachfolgeRaum);
 					nachfolgeRaum.setAusgang("north", aktuellerRaum);
 				}
 				y++;
 			}else if(randRichtung < 0.75d && x-1 >= 0){ 						//west
-				if(this.raum_begangen[x-1][y] == null) {
+				if(this.map[x-1][y] == null) {
 					//raeume.add(nachfolgeRaum);
-					this.raum_begangen[x-1][y] = nachfolgeRaum;
+					this.map[x-1][y] = nachfolgeRaum;
 
 					aktuellerRaum.setAusgang("west", nachfolgeRaum);
 					nachfolgeRaum.setAusgang("east", aktuellerRaum);
 				}else {
-					nachfolgeRaum = this.raum_begangen[x-1][y];
+					nachfolgeRaum = this.map[x-1][y];
 
 					aktuellerRaum.setAusgang("west", nachfolgeRaum);
 					nachfolgeRaum.setAusgang("east", aktuellerRaum);
 				}
 				x--;
 			}else if(randRichtung < 1.0d && y-1 >= 0){ 						//norden
-				if(this.raum_begangen[x][y-1] == null) {
+				if(this.map[x][y-1] == null) {
 					//raeume.add(nachfolgeRaum);
-					this.raum_begangen[x][y-1] = nachfolgeRaum;
+					this.map[x][y-1] = nachfolgeRaum;
 
 					aktuellerRaum.setAusgang("north", nachfolgeRaum);
 					nachfolgeRaum.setAusgang("south", aktuellerRaum);
 				}else {
-					nachfolgeRaum = this.raum_begangen[x][y-1];
+					nachfolgeRaum = this.map[x][y-1];
 
 					aktuellerRaum.setAusgang("north", nachfolgeRaum);
 					nachfolgeRaum.setAusgang("south", aktuellerRaum);
@@ -169,11 +168,11 @@ public class Landkarte {
 		boolean raumOk = false;
 		int x, y;
 		do {
-			x = (int) (Math.random()*raum_begangen.length);
-			y = (int) (Math.random()*raum_begangen[0].length);
-			if(raum_begangen[x][y] != null) {
+			x = (int) (Math.random()*map.length);
+			y = (int) (Math.random()*map[0].length);
+			if(map[x][y] != null) {
 				raumOk = true;
-				return raum_begangen[x][y];
+				return map[x][y];
 			}
 		}while(raumOk != true);
 		return null;
@@ -189,6 +188,8 @@ public class Landkarte {
 			Gegenstand g = gegenstandsPool[(int)(Math.random()*gegenstandsPool.length)];
 			getZufaelligenRaum().gegenstandAblegen(g);
 		}
+		//eine Karte Plazieren
+		getZufaelligenRaum().gegenstandAblegen(new Karte("Map", "eine Landkarte", 0.5d, map));
 	}
 	
 	/**
@@ -211,9 +212,10 @@ public class Landkarte {
 	 * @param max
 	 * Erstellt einen Initialen Raum mit der angegeben groeﬂe im Bereich des Minimums und Maximums
 	 */
+	//TODO wird bisher noch nicht verwendet kann/sollte eingebaut werden
 	private void levelSizeGenerator(int min, int max) {
 		int size = (int) ( max-min + (Math.random()*max) ) ; // Level grˆﬂe zuf‰llig zwischen min und max
-		this.raum_begangen = new Raum[size][size];
+		this.map = new Raum[size][size];
 	}
 
 	/**
@@ -222,9 +224,9 @@ public class Landkarte {
 	 */
 	public int getAnzahlRaeume() {
 		int anzahl = 0;
-		for(int x = 0; x < this.raum_begangen.length; x++) {
-			for(int y = 0; y < this.raum_begangen[x].length; y++) {
-				if(raum_begangen[x][y] != null) {
+		for(int x = 0; x < this.map.length; x++) {
+			for(int y = 0; y < this.map[x].length; y++) {
+				if(map[x][y] != null) {
 					anzahl++;
 				}
 			}
@@ -237,15 +239,15 @@ public class Landkarte {
 	 * Ausgabe der Karte in der Konsole
 	 */
 	public void displayMap() {
-		for(int y = 0; y < this.raum_begangen.length * 3;y++) {
-			for(int x = 0; x < this.raum_begangen[y/3].length * 3; x++) {
-				if(raum_begangen[x/3][y/3] != null) { //es ist ein Raum da
+		for(int y = 0; y < this.map.length * 3;y++) {
+			for(int x = 0; x < this.map[y/3].length * 3; x++) {
+				if(map[x/3][y/3] != null) { //es ist ein Raum da
 					if(x%3 == 0 || x %3 == 2) { //senkrechte und eckpunkte also + f¸r die Ecken und | f¸r die Senkrechten
 						//wenns kein Linkes oder Rechtes Mittelst¸ck ist ist es eine Ecke
 						if(y %3 == 1 ) {
-							if(this.raum_begangen[x/3][y/3].getAusgang("west") != null && x%3 == 0) { //pruefen ob der Raum einen Ausgang nach Westen oder Osten hat um dementsprechend die Zeichen anzupassen
+							if(this.map[x/3][y/3].getAusgang("west") != null && x%3 == 0) { //pruefen ob der Raum einen Ausgang nach Westen oder Osten hat um dementsprechend die Zeichen anzupassen
 								System.out.print(" ");
-							}else if(this.raum_begangen[x/3][y/3].getAusgang("east") != null && x%3 == 2) {
+							}else if(this.map[x/3][y/3].getAusgang("east") != null && x%3 == 2) {
 								System.out.print(" ");
 							}else {
 								System.out.print("|");
@@ -256,15 +258,15 @@ public class Landkarte {
 					}else if(x %3 == 1) { //wenns aber ein Mittelst¸ck ist dann soll geguckt werden ob es die Mitte ist oder ein Randst¸ck
 						if(y%3 ==1 && x %3 == 1) //ist die Mitte wenn X und Y Modulo 3 -> 1 ergeben 
 							//pruefen ob der Typ des Raumes ein Teleporter ist, dann auf der Karte mit einem 'T' kennzeichnen
-							if(this.raum_begangen[x/3][y/3].getClass().getName().equals("Level.Teleporter")) {
+							if(this.map[x/3][y/3].getClass().getName().equals("Level.Teleporter")) {
 								System.out.print("T");
 							}else {
 								System.out.print(" ");
 							}
 						else {
-							if(this.raum_begangen[x/3][y/3].getAusgang("north") != null && y%3 == 0) { //pruefen ob der Raum einen Ausgang nach norden oder sueden hat um dementsprechend die Zeichen anzupassen
+							if(this.map[x/3][y/3].getAusgang("north") != null && y%3 == 0) { //pruefen ob der Raum einen Ausgang nach norden oder sueden hat um dementsprechend die Zeichen anzupassen
 								System.out.print(" ");
-							}else if(this.raum_begangen[x/3][y/3].getAusgang("south") != null && y%3 == 2) {
+							}else if(this.map[x/3][y/3].getAusgang("south") != null && y%3 == 2) {
 								System.out.print(" ");
 							}else {
 								System.out.print("-");
@@ -279,8 +281,7 @@ public class Landkarte {
 		}
 
 		System.out.println("Raeume : -"	/* + raeume.size()*/);
-		System.out.println("SizeX : " 	+ this.raum_begangen[0].length);
-		System.out.println("SizeY : " 	+ this.raum_begangen.length);
+		System.out.println("SizeX : " 	+ this.map[0].length);
+		System.out.println("SizeY : " 	+ this.map.length);
 	}
-
 }

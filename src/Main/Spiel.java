@@ -1,7 +1,9 @@
 package Main;
 import java.util.ArrayList;
+import java.util.LinkedList;
 
 import Items.Gegenstand;
+import Items.Karte;
 import Items.Muffin;
 import Lebewesen.Spieler;
 import Level.Landkarte;
@@ -143,12 +145,14 @@ public class Spiel
         	}else{
         		System.out.println("Kein Monster hier!");
         	}
+        }else if(befehlswort.equals("map")) {
+        	showmap();
         }
         	
         return moechteBeenden;
     }
 
-    /**
+	/**
      * Methode zum Befehl attack
      * Greift ein Monster an und das Monster greift direkt zurück an
      *
@@ -313,4 +317,21 @@ public class Spiel
         System.out.println("Dieser Raum hat keinen Muffin");
     	
     }
+    
+    /**
+     * @author Pfaus
+     * @param befehl
+     * Zeigt eine Ascii Karte der Raeume in der Console.
+     */
+    private void showmap() {
+  		LinkedList<Gegenstand> gegenstaende = spieler.getAlleGegenstaende();
+  		for(Gegenstand g: gegenstaende) {
+  			if(g.getName().equals("Map")) {
+  				Karte k = (Karte) g;
+  				k.displayMap(); //ruft die Methode der Klasse Karte auf
+  				return;
+  			}
+  		}
+  		System.out.println("Du hast noch keine Karte gefunden");
+  	}
 }
