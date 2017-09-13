@@ -44,45 +44,6 @@ public class Landkarte {
 	 */
 	public void raeumeAnlegen(Spieler spieler)
 	{
-		//        Raum draussen, hoersaal, cafeteria, labor, buero;
-		//      
-		//        // die Räume erzeugen
-		//        draussen = new Raum("vor dem Haupteingang der Universität");
-		//        hoersaal = new Raum("in einem Vorlesungssaal");
-		//        cafeteria = new Raum("in der Cafeteria der Uni");
-		//        labor = new Raum("in einem Rechnerraum");
-		//        buero = new Raum("im Verwaltungsbüro der Informatik");
-		//        
-		//        // die Ausgänge initialisieren
-		//        draussen.setAusgang("east", hoersaal);
-		//        draussen.setAusgang("south", labor);
-		//        draussen.setAusgang("west",cafeteria);
-		//        hoersaal.setAusgang("west", draussen);
-		//        cafeteria.setAusgang("east", draussen);
-		//        labor.setAusgang("north",draussen);
-		//        labor.setAusgang("east", buero);
-		//        buero.setAusgang("west", labor);        
-		//        
-		//        //Räume mit Gegenstände versehen
-		//        draussen.gegenstandAblegen(new Gegenstand("Gewehr","ein Maschinengewehr mit 100 Schuss", 9.5));
-		//        draussen.gegenstandAblegen(new Gegenstand("Buch", "ein sehr altes Buch mit Ledereinband", 0.6));
-		//        draussen.gegenstandAblegen(new Muffin("Muffin", "ein magischer Muffin", 0.1, 5.0));
-		//        hoersaal.gegenstandAblegen(new Gegenstand("Schatz", "eine kleine Schatztruhe mit Münzen", 2.5));
-		//        cafeteria.gegenstandAblegen(new Gegenstand("Pistole", "eine Pistole mit sechs Schuss", 0.5));
-		//        labor.gegenstandAblegen(new Gegenstand("Nahrung", "ein Korb mit mehreren Fruchtsorten", 1.0));
-		//        buero.gegenstandAblegen(new Gegenstand("Seil", "ein Seil der Länge 3m", 0.3));
-		//        
-		//        //Räume mit Monstern versehen
-		//        cafeteria.setMonster(new Monster("Hugo"));
-		//        labor.setMonster(new Monster());
-		//
-		//        //Initialisierung des Spielers
-		//        //spieler = new Spieler();
-		//        
-		//     // das Spiel startet draussen
-		//        spieler.setAktuellerRaum(draussen);  
-
-		//raeumeGenerieren();
 		spieler.setAktuellerRaum(this.getZufaelligenRaum());
 	}
 
@@ -114,85 +75,8 @@ public class Landkarte {
 				//raeume.add(aktuellerRaum);
 				this.raum_begangen[x][y] = aktuellerRaum;
 			}
-
-			aktuellerRaum = addRoomToArray(aktuellerRaum, new Raum("Raum_"+i));
 			
-//			boolean loop_nochmal;
-//			do {
-//				loop_nochmal = false;
-//				//In welche Richtung soll der neue Raum angehangen werden?
-//				//erst richtung herausfinden
-//				//dann schauen ob der Raum noch nicht existiert
-//				randRichtung = Math.random();
-//				if(randRichtung < 0.25d && x+1 < max) {				//ost
-//					if(this.raum_begangen[x+1][y] == null) {
-//						nachfolgeRaum = new Raum("Raum_"+(i+1));
-//						//raeume.add(nachfolgeRaum);
-//						this.raum_begangen[x+1][y] = nachfolgeRaum;
-//
-//						aktuellerRaum.setAusgang("east", nachfolgeRaum);
-//						nachfolgeRaum.setAusgang("west", aktuellerRaum);
-//					}else {
-//						nachfolgeRaum = this.raum_begangen[x+1][y];
-//
-//						aktuellerRaum.setAusgang("east", nachfolgeRaum);
-//						nachfolgeRaum.setAusgang("west", aktuellerRaum);
-//					}
-//					x++;
-//				}else if(randRichtung < 0.5d && y+1 < max){ 						//sued
-//					if(this.raum_begangen[x][y+1] == null) {
-//						nachfolgeRaum = new Raum("Raum_"+(i+1));
-//						//raeume.add(nachfolgeRaum);
-//						this.raum_begangen[x][y+1] = nachfolgeRaum;
-//
-//						aktuellerRaum.setAusgang("south", nachfolgeRaum);
-//						nachfolgeRaum.setAusgang("north", aktuellerRaum);
-//					}else {
-//						nachfolgeRaum = this.raum_begangen[x][y+1];
-//
-//						aktuellerRaum.setAusgang("south", nachfolgeRaum);
-//						nachfolgeRaum.setAusgang("north", aktuellerRaum);
-//					}
-//					y++;
-//				}else if(randRichtung < 0.75d && x-1 > 0){ 						//west
-//					if(this.raum_begangen[x-1][y] == null) {
-//						nachfolgeRaum = new Raum("Raum_"+(i+1));
-//						//raeume.add(nachfolgeRaum);
-//						this.raum_begangen[x-1][y] = nachfolgeRaum;
-//
-//						aktuellerRaum.setAusgang("west", nachfolgeRaum);
-//						nachfolgeRaum.setAusgang("east", aktuellerRaum);
-//					}else {
-//						nachfolgeRaum = this.raum_begangen[x-1][y];
-//
-//						aktuellerRaum.setAusgang("west", nachfolgeRaum);
-//						nachfolgeRaum.setAusgang("east", aktuellerRaum);
-//					}
-//					x--;
-//				}else if(randRichtung < 1.0d && y-1 > 0){ 						//norden
-//					if(this.raum_begangen[x][y-1] == null) {
-//						nachfolgeRaum = new Raum("Raum_"+(i+1));
-//						//raeume.add(nachfolgeRaum);
-//						this.raum_begangen[x][y-1] = nachfolgeRaum;
-//
-//						aktuellerRaum.setAusgang("north", nachfolgeRaum);
-//						nachfolgeRaum.setAusgang("south", aktuellerRaum);
-//					}else {
-//						nachfolgeRaum = this.raum_begangen[x][y-1];
-//
-//						aktuellerRaum.setAusgang("north", nachfolgeRaum);
-//						nachfolgeRaum.setAusgang("south", aktuellerRaum);
-//					}
-//					y--;
-//				}else if(aktuellerRaum.getAusgang("north") == null || aktuellerRaum.getAusgang("south") == null || aktuellerRaum.getAusgang("west") == null || aktuellerRaum.getAusgang("east") == null){ //wenn hier, dann muss nochmal neu nach einem weg gesucht werden
-//					loop_nochmal = true;
-//				}
-//
-//			}while(loop_nochmal);
-//
-//			aktuellerRaum = nachfolgeRaum;
-//			nachfolgeRaum = null;
-
+			aktuellerRaum = addRoomToArray(aktuellerRaum, new Raum("Raum_"+i));
 			i++;
 		};
 		//Am ende des Algorthmus einen Teleporter hinzufuegen
@@ -371,6 +255,7 @@ public class Landkarte {
 						}
 					}else if(x %3 == 1) { //wenns aber ein Mittelstück ist dann soll geguckt werden ob es die Mitte ist oder ein Randstück
 						if(y%3 ==1 && x %3 == 1) //ist die Mitte wenn X und Y Modulo 3 -> 1 ergeben 
+							//pruefen ob der Typ des Raumes ein Teleporter ist, dann auf der Karte mit einem 'T' kennzeichnen
 							if(this.raum_begangen[x/3][y/3].getClass().getName().equals("Level.Teleporter")) {
 								System.out.print("T");
 							}else {
