@@ -195,7 +195,7 @@ public class Landkarte {
 	 * @author Pfaus
 	 * Waehlt zufaellig einen Raum aus der Map aus
 	 */
-	private Raum getZufaelligenRaum() {
+	public Raum getZufaelligenRaum() {
 		boolean raumOk = false;
 		int x, y;
 		do {

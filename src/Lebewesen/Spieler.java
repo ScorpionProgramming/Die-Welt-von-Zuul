@@ -98,11 +98,4 @@ public class Spieler extends Lebewesen implements IKampfsystem{
 	public void verteidigen(Lebewesen lebewesen) {
 		// TODO verteidigen methode macht momentan nichts
 	}
-	
-	
-	
-	
-	
-	
-
 }
