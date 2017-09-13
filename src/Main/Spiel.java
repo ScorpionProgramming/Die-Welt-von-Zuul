@@ -252,7 +252,7 @@ public class Spiel
             System.out.println("Dort ist keine Tür!");
         }
         else {
-        	if(naechsterRaum.getClass().getName().equals("Teleporter")) {
+        	if(naechsterRaum.getClass().getName().equals("Level.Teleporter")) {
         		spieler.setAktuellerRaum(landkarte.getZufaelligenRaum());
         		System.out.println("Du wurdest Teleportiert");
         	}else {

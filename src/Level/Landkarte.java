@@ -9,8 +9,13 @@ import Lebewesen.Spieler;
 
 public class Landkarte {
 
-	ArrayList<Raum> raeume= new ArrayList<Raum>();
+	//ArrayList<Raum> raeume= new ArrayList<Raum>();
 	Raum[][] raum_begangen; // wird vom Algorithmus verwendet
+	
+	//startwert fuer die Raumgeneration
+	int 	x,
+			y,
+			max;
 
 	//hier alle Gegenstaende anlegen die auf der Map enthalten sein sollen
 	Gegenstand gegenstandsPool[] = {
@@ -78,117 +83,198 @@ public class Landkarte {
 		//        spieler.setAktuellerRaum(draussen);  
 
 		//raeumeGenerieren();
-		spieler.setAktuellerRaum(raeume.get(0));
+		spieler.setAktuellerRaum(this.getZufaelligenRaum());
 	}
 
 	/**
 	 * @Autor Pfaus
-	 * Generiert zuf‰llig Raeume und Gaenge
+	 * Generiert zuf‰llig Raeume und Gaenge und fuegt sie der Karte hinzu
 	 */
 	private void raeumeGenerieren() {
-		Raum 	aktuellerRaum = null,
-				nachfolgeRaum = null;
+		Raum 	aktuellerRaum = null;
+				//nachfolgeRaum = null;
 		int 	i 	= 0,
-				max = (int)(4 + (Math.random() * 4)),
-				//startwert fuer die Raumgeneration
-				x 	= ( int ) ( Math.random() * max ), 
-				y 	= ( int ) ( Math.random() * max )
+				x = 0, 
+				y = 0
 				;
-
-		double randRichtung;
-
+		x 		= ( int ) ( Math.random() * max ); 
+		y 		= ( int ) ( Math.random() * max );
+		max 	= (int)(4 + (Math.random() * 4));
+		
+		
 		// erstellt die groeﬂe des Raumes anhand des zufaelligen Wertes von 'max'
 		this.raum_begangen = new Raum[max][max];
 		
 
 		int maxRaeume = 8;//(int) ( Math.random() * 6 );
 		while(i <= maxRaeume){
-			// TODO 
+
 			if(i == 0) {
-				aktuellerRaum = new Raum("Raum_"+i);
-				raeume.add(aktuellerRaum);
+				aktuellerRaum = new Teleporter("Raum_"+i);
+				//raeume.add(aktuellerRaum);
 				this.raum_begangen[x][y] = aktuellerRaum;
 			}
 
-			boolean loop_nochmal;
-			do {
-				loop_nochmal = false;
-				//In welche Richtung soll der neue Raum angehangen werden?
-				//erst richtung herausfinden
-				//dann schauen ob der Raum noch nicht existiert
-				randRichtung = Math.random();
-				if(randRichtung < 0.25d && x+1 < max) {				//ost
-					if(this.raum_begangen[x+1][y] == null) {
-						nachfolgeRaum = new Raum("Raum_"+(i+1));
-						raeume.add(nachfolgeRaum);
-						this.raum_begangen[x+1][y] = nachfolgeRaum;
-
-						aktuellerRaum.setAusgang("east", nachfolgeRaum);
-						nachfolgeRaum.setAusgang("west", aktuellerRaum);
-					}else {
-						nachfolgeRaum = this.raum_begangen[x+1][y];
-
-						aktuellerRaum.setAusgang("east", nachfolgeRaum);
-						nachfolgeRaum.setAusgang("west", aktuellerRaum);
-					}
-					x++;
-				}else if(randRichtung < 0.5d && y+1 < max){ 						//sued
-					if(this.raum_begangen[x][y+1] == null) {
-						nachfolgeRaum = new Raum("Raum_"+(i+1));
-						raeume.add(nachfolgeRaum);
-						this.raum_begangen[x][y+1] = nachfolgeRaum;
-
-						aktuellerRaum.setAusgang("south", nachfolgeRaum);
-						nachfolgeRaum.setAusgang("north", aktuellerRaum);
-					}else {
-						nachfolgeRaum = this.raum_begangen[x][y+1];
-
-						aktuellerRaum.setAusgang("south", nachfolgeRaum);
-						nachfolgeRaum.setAusgang("north", aktuellerRaum);
-					}
-					y++;
-				}else if(randRichtung < 0.75d && x-1 > 0){ 						//west
-					if(this.raum_begangen[x-1][y] == null) {
-						nachfolgeRaum = new Raum("Raum_"+(i+1));
-						raeume.add(nachfolgeRaum);
-						this.raum_begangen[x-1][y] = nachfolgeRaum;
-
-						aktuellerRaum.setAusgang("west", nachfolgeRaum);
-						nachfolgeRaum.setAusgang("east", aktuellerRaum);
-					}else {
-						nachfolgeRaum = this.raum_begangen[x-1][y];
-
-						aktuellerRaum.setAusgang("west", nachfolgeRaum);
-						nachfolgeRaum.setAusgang("east", aktuellerRaum);
-					}
-					x--;
-				}else if(randRichtung < 1.0d && y-1 > 0){ 						//norden
-					if(this.raum_begangen[x][y-1] == null) {
-						nachfolgeRaum = new Raum("Raum_"+(i+1));
-						raeume.add(nachfolgeRaum);
-						this.raum_begangen[x][y-1] = nachfolgeRaum;
-
-						aktuellerRaum.setAusgang("north", nachfolgeRaum);
-						nachfolgeRaum.setAusgang("south", aktuellerRaum);
-					}else {
-						nachfolgeRaum = this.raum_begangen[x][y-1];
-
-						aktuellerRaum.setAusgang("north", nachfolgeRaum);
-						nachfolgeRaum.setAusgang("south", aktuellerRaum);
-					}
-					y--;
-				}else if(aktuellerRaum.getAusgang("north") == null || aktuellerRaum.getAusgang("south") == null || aktuellerRaum.getAusgang("west") == null || aktuellerRaum.getAusgang("east") == null){ //wenn hier, dann muss nochmal neu nach einem weg gesucht werden
-					loop_nochmal = true;
-				}
-
-			}while(loop_nochmal);
-
-			aktuellerRaum = nachfolgeRaum;
-			nachfolgeRaum = null;
+			aktuellerRaum = addRoomToArray(aktuellerRaum, new Raum("Raum_"+i));
+			
+//			boolean loop_nochmal;
+//			do {
+//				loop_nochmal = false;
+//				//In welche Richtung soll der neue Raum angehangen werden?
+//				//erst richtung herausfinden
+//				//dann schauen ob der Raum noch nicht existiert
+//				randRichtung = Math.random();
+//				if(randRichtung < 0.25d && x+1 < max) {				//ost
+//					if(this.raum_begangen[x+1][y] == null) {
+//						nachfolgeRaum = new Raum("Raum_"+(i+1));
+//						//raeume.add(nachfolgeRaum);
+//						this.raum_begangen[x+1][y] = nachfolgeRaum;
+//
+//						aktuellerRaum.setAusgang("east", nachfolgeRaum);
+//						nachfolgeRaum.setAusgang("west", aktuellerRaum);
+//					}else {
+//						nachfolgeRaum = this.raum_begangen[x+1][y];
+//
+//						aktuellerRaum.setAusgang("east", nachfolgeRaum);
+//						nachfolgeRaum.setAusgang("west", aktuellerRaum);
+//					}
+//					x++;
+//				}else if(randRichtung < 0.5d && y+1 < max){ 						//sued
+//					if(this.raum_begangen[x][y+1] == null) {
+//						nachfolgeRaum = new Raum("Raum_"+(i+1));
+//						//raeume.add(nachfolgeRaum);
+//						this.raum_begangen[x][y+1] = nachfolgeRaum;
+//
+//						aktuellerRaum.setAusgang("south", nachfolgeRaum);
+//						nachfolgeRaum.setAusgang("north", aktuellerRaum);
+//					}else {
+//						nachfolgeRaum = this.raum_begangen[x][y+1];
+//
+//						aktuellerRaum.setAusgang("south", nachfolgeRaum);
+//						nachfolgeRaum.setAusgang("north", aktuellerRaum);
+//					}
+//					y++;
+//				}else if(randRichtung < 0.75d && x-1 > 0){ 						//west
+//					if(this.raum_begangen[x-1][y] == null) {
+//						nachfolgeRaum = new Raum("Raum_"+(i+1));
+//						//raeume.add(nachfolgeRaum);
+//						this.raum_begangen[x-1][y] = nachfolgeRaum;
+//
+//						aktuellerRaum.setAusgang("west", nachfolgeRaum);
+//						nachfolgeRaum.setAusgang("east", aktuellerRaum);
+//					}else {
+//						nachfolgeRaum = this.raum_begangen[x-1][y];
+//
+//						aktuellerRaum.setAusgang("west", nachfolgeRaum);
+//						nachfolgeRaum.setAusgang("east", aktuellerRaum);
+//					}
+//					x--;
+//				}else if(randRichtung < 1.0d && y-1 > 0){ 						//norden
+//					if(this.raum_begangen[x][y-1] == null) {
+//						nachfolgeRaum = new Raum("Raum_"+(i+1));
+//						//raeume.add(nachfolgeRaum);
+//						this.raum_begangen[x][y-1] = nachfolgeRaum;
+//
+//						aktuellerRaum.setAusgang("north", nachfolgeRaum);
+//						nachfolgeRaum.setAusgang("south", aktuellerRaum);
+//					}else {
+//						nachfolgeRaum = this.raum_begangen[x][y-1];
+//
+//						aktuellerRaum.setAusgang("north", nachfolgeRaum);
+//						nachfolgeRaum.setAusgang("south", aktuellerRaum);
+//					}
+//					y--;
+//				}else if(aktuellerRaum.getAusgang("north") == null || aktuellerRaum.getAusgang("south") == null || aktuellerRaum.getAusgang("west") == null || aktuellerRaum.getAusgang("east") == null){ //wenn hier, dann muss nochmal neu nach einem weg gesucht werden
+//					loop_nochmal = true;
+//				}
+//
+//			}while(loop_nochmal);
+//
+//			aktuellerRaum = nachfolgeRaum;
+//			nachfolgeRaum = null;
 
 			i++;
 		};
+		//Am ende des Algorthmus einen Teleporter hinzufuegen
+		//addRoomToArray(aktuellerRaum, new Teleporter("Raum_"+i));
+		
 		this.displayMap();
+	}
+	
+	private Raum addRoomToArray(Raum aktuellerRaum, Raum nachfolgeRaum) {
+		double randRichtung;
+		
+		boolean loop_nochmal;
+		do {
+			loop_nochmal = false;
+			//In welche Richtung soll der neue Raum angehangen werden?
+			//erst richtung herausfinden
+			//dann schauen ob der Raum noch nicht existiert
+			randRichtung = Math.random();
+			if(randRichtung < 0.25d && x+1 < max) {				//ost
+				if(this.raum_begangen[x+1][y] == null) {
+					this.raum_begangen[x+1][y] = nachfolgeRaum;
+
+					aktuellerRaum.setAusgang("east", nachfolgeRaum);
+					nachfolgeRaum.setAusgang("west", aktuellerRaum);
+				}else {
+					nachfolgeRaum = this.raum_begangen[x+1][y];
+
+					aktuellerRaum.setAusgang("east", nachfolgeRaum);
+					nachfolgeRaum.setAusgang("west", aktuellerRaum);
+				}
+				x++;
+			}else if(randRichtung < 0.5d && y+1 < max){ 						//sued
+				if(this.raum_begangen[x][y+1] == null) {
+					this.raum_begangen[x][y+1] = nachfolgeRaum;
+
+					aktuellerRaum.setAusgang("south", nachfolgeRaum);
+					nachfolgeRaum.setAusgang("north", aktuellerRaum);
+				}else {
+					nachfolgeRaum = this.raum_begangen[x][y+1];
+
+					aktuellerRaum.setAusgang("south", nachfolgeRaum);
+					nachfolgeRaum.setAusgang("north", aktuellerRaum);
+				}
+				y++;
+			}else if(randRichtung < 0.75d && x-1 >= 0){ 						//west
+				if(this.raum_begangen[x-1][y] == null) {
+					//raeume.add(nachfolgeRaum);
+					this.raum_begangen[x-1][y] = nachfolgeRaum;
+
+					aktuellerRaum.setAusgang("west", nachfolgeRaum);
+					nachfolgeRaum.setAusgang("east", aktuellerRaum);
+				}else {
+					nachfolgeRaum = this.raum_begangen[x-1][y];
+
+					aktuellerRaum.setAusgang("west", nachfolgeRaum);
+					nachfolgeRaum.setAusgang("east", aktuellerRaum);
+				}
+				x--;
+			}else if(randRichtung < 1.0d && y-1 >= 0){ 						//norden
+				if(this.raum_begangen[x][y-1] == null) {
+					//raeume.add(nachfolgeRaum);
+					this.raum_begangen[x][y-1] = nachfolgeRaum;
+
+					aktuellerRaum.setAusgang("north", nachfolgeRaum);
+					nachfolgeRaum.setAusgang("south", aktuellerRaum);
+				}else {
+					nachfolgeRaum = this.raum_begangen[x][y-1];
+
+					aktuellerRaum.setAusgang("north", nachfolgeRaum);
+					nachfolgeRaum.setAusgang("south", aktuellerRaum);
+				}
+				y--;
+			}else if(aktuellerRaum.getAusgang("north") == null || aktuellerRaum.getAusgang("south") == null || aktuellerRaum.getAusgang("west") == null || aktuellerRaum.getAusgang("east") == null){ //wenn hier, dann muss nochmal neu nach einem weg gesucht werden
+				loop_nochmal = true;
+			}
+
+		}while(loop_nochmal);
+
+		aktuellerRaum = nachfolgeRaum;
+		nachfolgeRaum = null;
+		
+		return aktuellerRaum;
 	}
 	
 	/**
@@ -251,7 +337,15 @@ public class Landkarte {
 	 * Gibt die Anzahl der begehbaren Raume zurueck
 	 */
 	public int getAnzahlRaeume() {
-		return 1;
+		int anzahl = 0;
+		for(int x = 0; x < this.raum_begangen.length; x++) {
+			for(int y = 0; y < this.raum_begangen[x].length; y++) {
+				if(raum_begangen[x][y] != null) {
+					anzahl++;
+				}
+			}
+		}
+		return anzahl;
 	}
 
 	/**
@@ -276,8 +370,12 @@ public class Landkarte {
 							System.out.print("+");
 						}
 					}else if(x %3 == 1) { //wenns aber ein Mittelst¸ck ist dann soll geguckt werden ob es die Mitte ist oder ein Randst¸ck
-						if(y%3 ==1 && x %3 == 1) //ist ein Randst¸ck wenn X und Y Modulo 3 -> 1 ergeben 
-							System.out.print(" ");
+						if(y%3 ==1 && x %3 == 1) //ist die Mitte wenn X und Y Modulo 3 -> 1 ergeben 
+							if(this.raum_begangen[x/3][y/3].getClass().getName().equals("Level.Teleporter")) {
+								System.out.print("T");
+							}else {
+								System.out.print(" ");
+							}
 						else {
 							if(this.raum_begangen[x/3][y/3].getAusgang("north") != null && y%3 == 0) { //pruefen ob der Raum einen Ausgang nach norden oder sueden hat um dementsprechend die Zeichen anzupassen
 								System.out.print(" ");
@@ -295,7 +393,7 @@ public class Landkarte {
 			System.out.println(); //naechste Zeile.
 		}
 
-		System.out.println("Raeume : "	+ raeume.size());
+		System.out.println("Raeume : -"	/* + raeume.size()*/);
 		System.out.println("SizeX : " 	+ this.raum_begangen[0].length);
 		System.out.println("SizeY : " 	+ this.raum_begangen.length);
 	}
