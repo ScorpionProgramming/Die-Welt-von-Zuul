@@ -54,7 +54,6 @@ public class Spiel
 	public static void main(String[] args) {
 		Spiel meinSpiel = new Spiel();
 		meinSpiel.spielen();
-
 	}
 
     /**

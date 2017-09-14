@@ -4,78 +4,78 @@ import Items.Gegenstand;
 import Items.Karte;
 import Items.Muffin;
 import Lebewesen.Monster;
-import Lebewesen.Spieler;
 
-public class Landkarte {
-
-	Raum[][] map; // wird vom Algorithmus verwendet
+public class LevelGenerator {
+	private Raum[][] map; //fertige Map
 	
 	//startwert fuer die Raumgeneration
-	int 	x,
-			y,
-			max;
-
+	private int 	x,
+					y,
+					max; //maximale anzahl Raeume
+	
+	private int maxItems	= 6;	
+	private int maxMonster	= 3;
+	
 	//hier alle Gegenstaende anlegen die auf der Map enthalten sein sollen
 	//wenn eine ein Gegenstand mit einer höhren Wahrscheinlichkeit plaziert werden soll, muss dieser öfter in den Pool hinzugefuegt werden.
-	Gegenstand gegenstandsPool[] = {
+	private Gegenstand gegenstandsPool[] = {
 			new Gegenstand("Gewehr","ein Maschinengewehr mit 100 Schuss", 9.5),
 			new Gegenstand("Buch", "ein sehr altes Buch mit Ledereinband", 0.6),
 			new Muffin("Muffin", "ein magischer Muffin", 0.1, 5.0),
 			new Gegenstand("Nahrung", "ein Korb mit mehreren Fruchtsorten", 1.0)
 	};
-
+	
 	//hier alle Monster hinzufuegen die auf der Map enthalten sein sollen
 	//wenn eine ein Monster mit einer höhren Wahrscheinlichkeit plaziert werden soll, muss dieser öfter in den Pool hinzugefuegt werden.
-	Monster monsterPool[] = {
+	private Monster monsterPool[] = {
 		new Monster("Skelett"),
 		new Monster("Ratte"),
 		new Monster("Geist"),
 		new Monster("Spinne")
 	};
-
-	public Landkarte(){
-		//ctor
-		raeumeGenerieren();
-		platziereItems(6);
-		platziereMonster(3);
+	
+	/**
+	 * Standart ctor
+	 * TODO später startwerte fuer den Algorithmus angeben
+	 */
+	public LevelGenerator() {
+		this.x = 0;
+		this.y = 0;
+	}
+	
+	public Landkarte generate() {
+		Landkarte landkarte = new Landkarte();
+		this.raeumeGenerieren();
+		this.platziereItems(landkarte, maxItems);
+		this.platziereMonster(landkarte, maxMonster);
+		return landkarte;
 	}
 	
 	/**
-	 * @param x Coordinate im Array
-	 * @param y Cooridnate im Array
-	 * @return den Raum an der Stelle X-Y
+	 * @Autor Pfaus
+	 * @param min
+	 * @param max
+	 * Erstellt einen Initialen Raum mit der angegeben groeße im Bereich des Minimums und Maximums
 	 */
-	public Raum getRaum(int x, int y) {
-		return map[x][y];
+	//TODO wird bisher noch nicht verwendet kann/sollte eingebaut werden
+	private void levelSizeGenerator(int min, int max) {
+		int size = (int) ( max-min + (Math.random()*max) ) ; // Level größe zufällig zwischen min und max
+		this.map = new Raum[size][size];
 	}
 	
-	/**
-	 * Erzeuge alle Räume und verbinde ihre Ausgänge miteinander.
-	 */
-	public void raeumeAnlegen(Spieler spieler)
-	{
-		spieler.setAktuellerRaum(this.getZufaelligenRaum());
-	}
-
 	/**
 	 * @Autor Pfaus
 	 * Generiert zufällig Raeume und Gaenge und fuegt sie der Karte hinzu
 	 */
 	private void raeumeGenerieren() {
 		Raum 	aktuellerRaum = null;
-				//nachfolgeRaum = null;
 		int 	i 	= 0;
-//				x = 0, 
-//				y = 0
-				;
 		x 		= ( int ) ( Math.random() * max ); 
 		y 		= ( int ) ( Math.random() * max );
 		max 	= (int)(4 + (Math.random() * 4));
 		
-		
 		// erstellt die groeße des Raumes anhand des zufaelligen Wertes von 'max'
 		this.map = new Raum[max][max];
-		
 
 		int maxRaeume = 8;//(int) ( Math.random() * 6 );
 		while(i <= maxRaeume){
@@ -95,6 +95,11 @@ public class Landkarte {
 		//this.displayMap();
 	}
 	
+	/**
+	 * @param aktuellerRaum der Raum in dem sich der Algorithmus gerade befindet
+	 * @param nachfolgeRaum der Raum der mitgegegeben wird. Kann auch ein Teleporter sein.
+	 * @return den neuen Raum der für den Algorithmus gebraucht wird.
+	 */
 	private Raum addRoomToArray(Raum aktuellerRaum, Raum nachfolgeRaum) {
 		double randRichtung;
 		
@@ -173,102 +178,16 @@ public class Landkarte {
 	
 	/**
 	 * @author Pfaus
-	 * Waehlt zufaellig einen Raum aus der Map aus
-	 */
-	public Raum getZufaelligenRaum() {
-		boolean raumOk = false;
-		int x, y;
-		do {
-			x = (int) (Math.random()*map.length);
-			y = (int) (Math.random()*map[0].length);
-			if(map[x][y] != null) {
-				raumOk = true;
-				return map[x][y];
-			}
-		}while(raumOk != true);
-		return null;
-	}
-	
-	
-	/**
-	 * @Autor Pfaus
-	 * Gibt die Anzahl der begehbaren Raume zurueck
-	 */
-	public int getAnzahlRaeume() {
-		int anzahl = 0;
-		for(int x = 0; x < this.map.length; x++) {
-			for(int y = 0; y < this.map[x].length; y++) {
-				if(map[x][y] != null) {
-					anzahl++;
-				}
-			}
-		}
-		return anzahl;
-	}
-
-	/**
-	 * @Autor Pfaus
-	 * Ausgabe der Karte in der Konsole
-	 */
-	public void displayMap() {
-		for(int y = 0; y < this.map.length * 3;y++) {
-			for(int x = 0; x < this.map[y/3].length * 3; x++) {
-				if(map[x/3][y/3] != null) { //es ist ein Raum da
-					if(x%3 == 0 || x %3 == 2) { //senkrechte und eckpunkte also + für die Ecken und | für die Senkrechten
-						//wenns kein Linkes oder Rechtes Mittelstück ist ist es eine Ecke
-						if(y %3 == 1 ) {
-							if(this.map[x/3][y/3].getAusgang("west") != null && x%3 == 0) { //pruefen ob der Raum einen Ausgang nach Westen oder Osten hat um dementsprechend die Zeichen anzupassen
-								System.out.print(" ");
-							}else if(this.map[x/3][y/3].getAusgang("east") != null && x%3 == 2) {
-								System.out.print(" ");
-							}else {
-								System.out.print("|");
-							}
-						}else {
-							System.out.print("+");
-						}
-					}else if(x %3 == 1) { //wenns aber ein Mittelstück ist dann soll geguckt werden ob es die Mitte ist oder ein Randstück
-						if(y%3 ==1 && x %3 == 1) //ist die Mitte wenn X und Y Modulo 3 -> 1 ergeben 
-							//pruefen ob der Typ des Raumes ein Teleporter ist, dann auf der Karte mit einem 'T' kennzeichnen
-							if(this.map[x/3][y/3].getClass().getName().equals("Level.Teleporter")) {
-								System.out.print("@");
-							}else {
-								System.out.print(" ");
-							}
-						else {
-							if(this.map[x/3][y/3].getAusgang("north") != null && y%3 == 0) { //pruefen ob der Raum einen Ausgang nach norden oder sueden hat um dementsprechend die Zeichen anzupassen
-								System.out.print(" ");
-							}else if(this.map[x/3][y/3].getAusgang("south") != null && y%3 == 2) {
-								System.out.print(" ");
-							}else {
-								System.out.print("-");
-							}
-						}
-					}
-				}else { //es ist kein Raum da
-					System.out.print(" ");
-				}
-			}
-			System.out.println(); //naechste Zeile.
-		}
-
-		System.out.println("Raeume : " 	+ this.getAnzahlRaeume());
-		System.out.println("SizeX : " 	+ this.map[0].length);
-		System.out.println("SizeY : " 	+ this.map.length);
-	}
-	
-	/**
-	 * @author Pfaus
 	 * Setzt in die Map zufällig Items aus der Gegenstandsliste
 	 * @param maxGegenstaende maximale Anzahl an Gegenstaende die auf der Map verteilt werden sollen
 	 */
-	private void platziereItems(int maxGegenstaende) {
+	private void platziereItems(Landkarte landkarte, int maxGegenstaende) {
 		for(int i = 0; i < maxGegenstaende; i++) {
 			Gegenstand g = gegenstandsPool[(int)(Math.random()*gegenstandsPool.length)];
-			getZufaelligenRaum().gegenstandAblegen(g);
+			landkarte.getZufaelligenRaum().gegenstandAblegen(g);
 		}
 		//eine Karte Plazieren
-		getZufaelligenRaum().gegenstandAblegen(new Karte("Map", "eine Landkarte", 0.5d, map));
+		landkarte.getZufaelligenRaum().gegenstandAblegen(new Karte("Map", "eine Landkarte", 0.5d, map));
 	}
 	
 	/**
@@ -276,10 +195,10 @@ public class Landkarte {
 	 * Setzt zufaellig auf die Karte Monster aus der Monster Liste
 	 * @param maxMonster maximale Anzahl an Monster die auf der Map verteilt werden sollen
 	 */
-	private void platziereMonster(int maxMonster) {
+	private void platziereMonster(Landkarte landkarte, int maxMonster) {
 		for(int i = 0; i < maxMonster; i++) {
 			Monster m = monsterPool[(int)(Math.random()*monsterPool.length)];
-			Raum r = getZufaelligenRaum();
+			Raum r = landkarte.getZufaelligenRaum();
 			m.setAktuellerRaum(r);
 			r.setMonster(m);
 		}

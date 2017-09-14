@@ -37,7 +37,7 @@ public class Karte extends Gegenstand{
 						if(y%3 ==1 && x %3 == 1) //ist die Mitte wenn X und Y Modulo 3 -> 1 ergeben 
 							//pruefen ob der Typ des Raumes ein Teleporter ist, dann auf der Karte mit einem 'T' kennzeichnen
 							if(this.map[x/3][y/3].getClass().getName().equals("Level.Teleporter")) {
-								System.out.print("T");
+								System.out.print("@");
 							}else {
 								System.out.print(" ");
 							}
