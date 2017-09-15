@@ -4,14 +4,16 @@ import Items.Gegenstand;
 import Items.Karte;
 import Items.Muffin;
 import Lebewesen.Monster;
+import Lebewesen.Spieler;
 
 public class LevelGenerator {
-	private Raum[][] map; //fertige Map
+	//private Raum[][] map; //fertige Map
+	private Landkarte landkarte;
 	
 	//startwert fuer die Raumgeneration
 	private int 	x,
 					y,
-					max; //maximale anzahl Raeume
+					max; //width und height des arrays
 	
 	private int maxItems	= 6;	
 	private int maxMonster	= 3;
@@ -35,6 +37,7 @@ public class LevelGenerator {
 	};
 	
 	/**
+	 * @author Pfaus
 	 * Standart ctor
 	 * TODO sp‰ter startwerte fuer den Algorithmus angeben
 	 */
@@ -43,24 +46,14 @@ public class LevelGenerator {
 		this.y = 0;
 	}
 	
-	public Landkarte generate() {
-		Landkarte landkarte = new Landkarte();
+	public Landkarte generate(Spieler spieler, int max) {
+		this.max = max;
+		landkarte = new Landkarte(this.max);
 		this.raeumeGenerieren();
-		this.platziereItems(landkarte, maxItems);
-		this.platziereMonster(landkarte, maxMonster);
-		return landkarte;
-	}
-	
-	/**
-	 * @Autor Pfaus
-	 * @param min
-	 * @param max
-	 * Erstellt einen Initialen Raum mit der angegeben groeﬂe im Bereich des Minimums und Maximums
-	 */
-	//TODO wird bisher noch nicht verwendet kann/sollte eingebaut werden
-	private void levelSizeGenerator(int min, int max) {
-		int size = (int) ( max-min + (Math.random()*max) ) ; // Level grˆﬂe zuf‰llig zwischen min und max
-		this.map = new Raum[size][size];
+		this.platziereItems(this.landkarte, maxItems);
+		this.platziereMonster(this.landkarte, maxMonster);
+		spieler.setAktuellerRaum(this.landkarte.getZufaelligenRaum());
+		return this.landkarte;
 	}
 	
 	/**
@@ -75,15 +68,16 @@ public class LevelGenerator {
 		max 	= (int)(4 + (Math.random() * 4));
 		
 		// erstellt die groeﬂe des Raumes anhand des zufaelligen Wertes von 'max'
-		this.map = new Raum[max][max];
-
+		//this.map = new Raum[max][max]; TODO wird schon im ctor erledigt
+		
 		int maxRaeume = 8;//(int) ( Math.random() * 6 );
 		while(i <= maxRaeume){
 
 			if(i == 0) {
 				aktuellerRaum = new Teleporter("Raum_"+i);
 				//raeume.add(aktuellerRaum);
-				this.map[x][y] = aktuellerRaum;
+				//this.map[x][y] = aktuellerRaum;
+				this.landkarte.setRaum(x, y, aktuellerRaum);
 			}
 			
 			aktuellerRaum = addRoomToArray(aktuellerRaum, new Raum("Raum_"+i));
@@ -111,55 +105,67 @@ public class LevelGenerator {
 			//dann schauen ob der Raum noch nicht existiert
 			randRichtung = Math.random();
 			if(randRichtung < 0.25d && x+1 < max) {				//ost
-				if(this.map[x+1][y] == null) {
-					this.map[x+1][y] = nachfolgeRaum;
-
+				//if(this.map[x+1][y] == null) {
+				if(this.landkarte.getRaum(x+1, y) == null) {
+					//this.map[x+1][y] = nachfolgeRaum;
+					this.landkarte.setRaum(x+1, y, nachfolgeRaum);
+					
 					aktuellerRaum.setAusgang("east", nachfolgeRaum);
 					nachfolgeRaum.setAusgang("west", aktuellerRaum);
 				}else {
-					nachfolgeRaum = this.map[x+1][y];
-
+//					nachfolgeRaum = this.map[x+1][y];
+					nachfolgeRaum = this.landkarte.getRaum(x+1, y);
+					
 					aktuellerRaum.setAusgang("east", nachfolgeRaum);
 					nachfolgeRaum.setAusgang("west", aktuellerRaum);
 				}
 				x++;
 			}else if(randRichtung < 0.5d && y+1 < max){ 						//sued
-				if(this.map[x][y+1] == null) {
-					this.map[x][y+1] = nachfolgeRaum;
+//				if(this.map[x][y+1] == null) {
+				if(this.landkarte.getRaum(x, y+1)== null) {
+					//this.map[x][y+1] = nachfolgeRaum;
+					this.landkarte.setRaum(x, y+1, nachfolgeRaum);
 
 					aktuellerRaum.setAusgang("south", nachfolgeRaum);
 					nachfolgeRaum.setAusgang("north", aktuellerRaum);
 				}else {
-					nachfolgeRaum = this.map[x][y+1];
+					//nachfolgeRaum = this.map[x][y+1];
+					nachfolgeRaum = this.landkarte.getRaum(x, y+1);
 
 					aktuellerRaum.setAusgang("south", nachfolgeRaum);
 					nachfolgeRaum.setAusgang("north", aktuellerRaum);
 				}
 				y++;
 			}else if(randRichtung < 0.75d && x-1 >= 0){ 						//west
-				if(this.map[x-1][y] == null) {
+				//if(this.map[x-1][y] == null) {
+				if(this.landkarte.getRaum(x-1, y) == null) {
 					//raeume.add(nachfolgeRaum);
-					this.map[x-1][y] = nachfolgeRaum;
-
+					//this.map[x-1][y] = nachfolgeRaum;
+					this.landkarte.setRaum(x-1, y, nachfolgeRaum);
+					
 					aktuellerRaum.setAusgang("west", nachfolgeRaum);
 					nachfolgeRaum.setAusgang("east", aktuellerRaum);
 				}else {
-					nachfolgeRaum = this.map[x-1][y];
-
+					//nachfolgeRaum = this.map[x-1][y];
+					nachfolgeRaum = this.landkarte.getRaum(x-1, y);
+					
 					aktuellerRaum.setAusgang("west", nachfolgeRaum);
 					nachfolgeRaum.setAusgang("east", aktuellerRaum);
 				}
 				x--;
 			}else if(randRichtung < 1.0d && y-1 >= 0){ 						//norden
-				if(this.map[x][y-1] == null) {
+				//if(this.map[x][y-1] == null) {
+				if(this.landkarte.getRaum(x, y-1) == null) {
 					//raeume.add(nachfolgeRaum);
-					this.map[x][y-1] = nachfolgeRaum;
-
+					//this.map[x][y-1] = nachfolgeRaum;
+					this.landkarte.setRaum(x, y-1, nachfolgeRaum);
+					
 					aktuellerRaum.setAusgang("north", nachfolgeRaum);
 					nachfolgeRaum.setAusgang("south", aktuellerRaum);
 				}else {
-					nachfolgeRaum = this.map[x][y-1];
-
+					//nachfolgeRaum = this.map[x][y-1];
+					nachfolgeRaum = this.landkarte.getRaum(x, y-1);
+					
 					aktuellerRaum.setAusgang("north", nachfolgeRaum);
 					nachfolgeRaum.setAusgang("south", aktuellerRaum);
 				}
@@ -187,7 +193,7 @@ public class LevelGenerator {
 			landkarte.getZufaelligenRaum().gegenstandAblegen(g);
 		}
 		//eine Karte Plazieren
-		landkarte.getZufaelligenRaum().gegenstandAblegen(new Karte("Map", "eine Landkarte", 0.5d, map));
+		landkarte.getZufaelligenRaum().gegenstandAblegen(new Karte("Map", "eine Landkarte", 0.5d, landkarte));
 	}
 	
 	/**
