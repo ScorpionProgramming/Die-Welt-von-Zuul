@@ -144,8 +144,8 @@ public class Spiel
         	}else{
         		System.out.println("Kein Monster hier!");
         	}
-        }else if(befehlswort.equals("map")) {
-        	showmap();
+        } else if (befehlswort.equals("use")) {
+            showmap(befehl);
         }
         	
         return moechteBeenden;
@@ -322,15 +322,20 @@ public class Spiel
      * @param befehl
      * Zeigt eine Ascii Karte der Raeume in der Console.
      */
-    private void showmap() {
-  		LinkedList<Gegenstand> gegenstaende = spieler.getAlleGegenstaende();
-  		for(Gegenstand g: gegenstaende) {
-  			if(g.getName().equals("Map")) {
-  				Karte k = (Karte) g;
-  				k.displayMap(); //ruft die Methode der Klasse Karte auf
-  				return;
-  			}
-  		}
-  		System.out.println("Du hast noch keine Karte gefunden");
-  	}
+    private void showmap(Befehl befehl) {
+        if (!befehl.hatZweitesWort()) {
+            System.out.println("Welchen Gegenstand wollen Sie benutzen?");
+        }
+        if (befehl.gibZweitesWort().equals("Map")) {
+            LinkedList<Gegenstand> gegenstaende = spieler.getAlleGegenstaende();
+            for (Gegenstand g : gegenstaende) {
+                if (g.getName().equals("Map")) {
+                    Karte k = (Karte) g;
+                    k.displayMap(); //ruft die Methode der Klasse Karte auf
+                    return;
+                }
+            }
+            System.out.println("Du hast noch keine Karte gefunden");
+        }
+    }
 }
