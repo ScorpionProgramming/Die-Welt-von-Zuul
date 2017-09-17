@@ -7,6 +7,7 @@ import Items.Karte;
 import Items.Muffin;
 import Lebewesen.Spieler;
 import Level.Landkarte;
+import Level.LevelGenerator;
 import Level.Raum;
 import Utils.Befehl;
 import Utils.Parser;
@@ -35,6 +36,7 @@ public class Spiel
     private Spieler spieler;
 	private Parser parser;
 	private Landkarte landkarte;
+	private LevelGenerator levelGen = new LevelGenerator();
         
     /**
      * Erzeuge ein Spiel und initialisiere die interne Raumkarte.
@@ -42,8 +44,11 @@ public class Spiel
     public Spiel() 
     {
     	spieler = new Spieler();
-    	landkarte = new Landkarte();
-        landkarte.raeumeAnlegen(spieler);
+    	//landkarte = new Landkarte(5);
+        //landkarte.raeumeAnlegen(spieler);
+    	
+    	landkarte = levelGen.generate(spieler, 5);
+    	
         parser = new Parser();
     }
 
