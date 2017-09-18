@@ -6,10 +6,19 @@ import Items.Gegenstand;
 import Kampfsystem.IKampfsystem;
 import Zustaende.Gesund;
 
+/**
+ * Klasse Spieler erweitert Lebewesen und erbt die Attribute "aktuellerRaum" und "aktuellerZustand"
+ * und verwendet das Interface Kampfsystem
+ * Die Klasse selbst liefert die Attribute "tragkraft" und eine LinkedList
+ * dazu kommt die Methode "angreifen"
+ */
 public class Spieler extends Lebewesen implements IKampfsystem{
 	private double tragkraft;
 	private LinkedList<Gegenstand> gegenstaende;
-	
+
+	/**
+	 * Ctor
+	 */
 	public Spieler()
 	{
 		tragkraft = 10.0;

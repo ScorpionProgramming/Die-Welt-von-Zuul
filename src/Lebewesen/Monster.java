@@ -2,6 +2,11 @@ package Lebewesen;
 import Kampfsystem.IKampfsystem;
 import Zustaende.Gesund;
 
+/**
+ * Klasse Monster erweitert Lebewesen und erbt die Attribute "aktuellerRaum" und "aktuellerZustand" 
+ * und verwendet das Interface Kampfsystem
+ * Die Klasse selber liefert das Attribut "name" 
+ */
 public class Monster extends Lebewesen implements IKampfsystem{
 
 	private String name;
