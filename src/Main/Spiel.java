@@ -151,6 +151,9 @@ public class Spiel
         	}
         } else if (befehlswort.equals("use")) {
             showmap(befehl);
+        } else if (befehlswort.equalsIgnoreCase("heal")) {
+            heilenTrankBenutzen();
+            System.out.println(spieler.zeigeZustand());
         }
         	
         return moechteBeenden;
@@ -162,13 +165,16 @@ public class Spiel
      *
      */
     private void angreifen() {
-    	this.spieler.angreifen(this.spieler.getAktuellerRaum().getMonster());
-    	
-    	System.out.print(this.spieler.getAktuellerRaum().getMonster().getName());
-    	System.out.println(": " + this.spieler.getAktuellerRaum().getMonster().getAktuellerZustand().toString());
-    	
-    	if(this.spieler.getAktuellerRaum().getMonster().getAktuellerZustand().toString().equals("Tod")){
-    		this.spieler.getAktuellerRaum().setMonster(null);
+        System.out.print("Du greifst das Monster an");
+        makePause();
+        this.spieler.angreifen(this.spieler.getAktuellerRaum().getMonster());
+        System.out.print(this.spieler.getAktuellerRaum().getMonster().getName());
+        System.out.println(": " + this.spieler.getAktuellerRaum().getMonster().getAktuellerZustand().toString());
+        System.out.println();
+        System.out.print("Das Monster greift dich an");
+        makePause();
+        if (this.spieler.getAktuellerRaum().getMonster().getAktuellerZustand().toString().equals("Tod")) {
+            this.spieler.getAktuellerRaum().setMonster(null);
     	}else{
         	this.spieler.getAktuellerRaum().getMonster().angreifen(this.spieler);
     	}
@@ -331,7 +337,7 @@ public class Spiel
         if (!befehl.hatZweitesWort()) {
             System.out.println("Welchen Gegenstand wollen Sie benutzen?");
         }
-        if (befehl.gibZweitesWort().equals("Map")) {
+        if (befehl.gibZweitesWort().equalsIgnoreCase("Map")) {
             LinkedList<Gegenstand> gegenstaende = spieler.getAlleGegenstaende();
             for (Gegenstand g : gegenstaende) {
                 if (g.getName().equals("Map")) {
@@ -342,5 +348,31 @@ public class Spiel
             }
             System.out.println("Du hast noch keine Karte gefunden");
         }
+    }
+
+    private void heilenTrankBenutzen() {
+        ArrayList<Gegenstand> gegenstaende = spieler.getAktuellerRaum().getAlleGegenstaende();
+        for (Gegenstand g : gegenstaende) {
+            if (g.getName().equalsIgnoreCase("heiltrank")) {
+                spieler.heilen();
+                gegenstaende.remove(g);
+                System.out.print("Heiltrank wird benutzt");
+                makePause();
+                return;
+            }
+        }
+        System.out.println("Du hast gerade keinen Heiltrank");
+    }
+
+    private void makePause() {
+        for (int i = 0; i < 3; i++) {
+            System.out.print(".");
+            try {
+                Thread.sleep(500);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
+        System.out.println();
     }
 }

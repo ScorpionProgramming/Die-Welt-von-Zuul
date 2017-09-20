@@ -47,14 +47,14 @@ public class Lebewesen {
 	}
 	/**
 	 * Methode toetlichVerletzen
-	 * Verschlechtert den Zustand als Folge eines Kampfes -> tötet das Lebewesen auf jeden Fall
+	 * Verschlechtert den Zustand als Folge eines Kampfes -> tï¿½tet das Lebewesen auf jeden Fall
 	 */	
 	public void toetlichVerletzen(){
 		aktuellerZustand = aktuellerZustand.toetlichVerletzen();
 	}
 	/**
 	 * Methode getAktuellerZustand
-	 * @return gibt den Aktuellen Zustand des Lebewesens zurück
+	 * @return gibt den Aktuellen Zustand des Lebewesens zurï¿½ck
 	 */	
 	public IZustand getAktuellerZustand() {
 		return aktuellerZustand;

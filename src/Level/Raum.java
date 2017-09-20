@@ -7,18 +7,18 @@ import Items.Gegenstand;
 import Lebewesen.Monster;
 
 /**
- * Diese Klasse modelliert Räume in der Welt von Zuul.
- * 
- * Ein "Raum" repräsentiert einen Ort in der virtuellen Landschaft des
- * Spiels. Ein Raum ist mit anderen Räumen über Ausgänge verbunden.
- * Mögliche Ausgänge liegen im Norden, Osten, Süden und Westen.
- * Für jede Richtung hält ein Raum eine Referenz auf den 
+ * Diese Klasse modelliert R?ume in der Welt von Zuul.
+ *
+ * Ein "Raum" repr?sentiert einen Ort in der virtuellen Landschaft des
+ * Spiels. Ein Raum ist mit anderen R?umen ?ber Ausg?nge verbunden.
+ * M?gliche Ausg?nge liegen im Norden, Osten, S?den und Westen.
+ * F?r jede Richtung h?lt ein Raum eine Referenz auf den 
  * benachbarten Raum.
  * 
  * @author  Michael Kolling and David J. Barnes
  * @version 2008.03.30
  */
-public class Raum 
+public class Raum
 {
     private String beschreibung;
     private ArrayList<Gegenstand> gegenstaende;
@@ -26,9 +26,9 @@ public class Raum
     private Monster monster; //TODO: eventuell zu ArrayList umschreiben
     /**
      * Erzeuge einen Raum mit einer Beschreibung. Ein Raum
-     * hat anfangs keine Ausgänge.
-     * @param beschreibung enthält eine Beschreibung in der Form
-     *        "in einer Küche" oder "auf einem Sportplatz".
+     * hat anfangs keine Ausg?nge.
+     * @param beschreibung enth?lt eine Beschreibung in der Form
+     *        "in einer K?che" oder "auf einem Sportplatz".
      */
     public Raum(String beschreibung) 
     {
@@ -41,7 +41,7 @@ public class Raum
     /**
      * Definiere einen Ausgang aus diesem Raum.
      * @param richtung die Richtung, in der der Ausgang liegen soll
-     * @param nachbar der Raum, der über diesen Ausgang erreicht wird
+     * @param nachbar der Raum, der ?ber diesen Ausgang erreicht wird
      */
     public void setAusgang(String richtung, Raum nachbar) 
     {
@@ -76,16 +76,16 @@ public class Raum
     
     public String ausgaengeToString()
     {
-    	StringBuilder ergebnis = new StringBuilder("Ausgänge: ");
-    	for(String key : ausgaenge.keySet())
+        StringBuilder ergebnis = new StringBuilder("Ausg?nge: ");
+        for(String key : ausgaenge.keySet())
     		ergebnis.append(key).append(" ");    	
     	return ergebnis.toString();
     }
     
     /**
      * Liefere eine lange Beschreibung dieses Raums, in der Form:
-     *    Sie sind in der Küche.
-     *    Ausgänge: north, west
+     *    Sie sind in der K?che.
+     *    Ausg?nge: north, west
      * @return eine lange Beschreibung des Raums
      */
     public String getLangeBeschreibung()
@@ -95,8 +95,8 @@ public class Raum
     		monstervar = "\nMonster: " + monster.getName();
     	}
     	return "Sie sind " + beschreibung + ".\n"+ ausgaengeToString()+
-    			"\nGegenstände: "+gegenstaendeToString()+
-    			 monstervar;
+                "\nGegenst?nde: " + gegenstaendeToString() +
+                monstervar;
     }
     
     public void gegenstandAblegen(Gegenstand g)

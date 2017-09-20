@@ -19,16 +19,17 @@ public class LevelGenerator {
 	private int maxMonster	= 3;
 	
 	//hier alle Gegenstaende anlegen die auf der Map enthalten sein sollen
-	//wenn eine ein Gegenstand mit einer höhren Wahrscheinlichkeit plaziert werden soll, muss dieser öfter in den Pool hinzugefuegt werden.
+	//wenn eine ein Gegenstand mit einer hï¿½hren Wahrscheinlichkeit plaziert werden soll, muss dieser ï¿½fter in den Pool hinzugefuegt werden.
 	private Gegenstand gegenstandsPool[] = {
 			new Gegenstand("Gewehr","ein Maschinengewehr mit 100 Schuss", 9.5),
 			new Gegenstand("Buch", "ein sehr altes Buch mit Ledereinband", 0.6),
 			new Muffin("Muffin", "ein magischer Muffin", 0.1, 5.0),
-			new Gegenstand("Nahrung", "ein Korb mit mehreren Fruchtsorten", 1.0)
-	};
+            new Gegenstand("Nahrung", "ein Korb mit mehreren Fruchtsorten", 1.0),
+            new Gegenstand("Heiltrank", "ein leckerer Heiltrank", 0.5)
+    };
 	
 	//hier alle Monster hinzufuegen die auf der Map enthalten sein sollen
-	//wenn eine ein Monster mit einer höhren Wahrscheinlichkeit plaziert werden soll, muss dieser öfter in den Pool hinzugefuegt werden.
+	//wenn eine ein Monster mit einer hï¿½hren Wahrscheinlichkeit plaziert werden soll, muss dieser ï¿½fter in den Pool hinzugefuegt werden.
 	private Monster monsterPool[] = {
 		new Monster("Skelett"),
 		new Monster("Ratte"),
@@ -39,7 +40,7 @@ public class LevelGenerator {
 	/**
 	 * @author Pfaus
 	 * Standart ctor
-	 * TODO später startwerte fuer den Algorithmus angeben
+	 * TODO spï¿½ter startwerte fuer den Algorithmus angeben
 	 */
 	public LevelGenerator() {
 		this.x = 0;
@@ -53,12 +54,15 @@ public class LevelGenerator {
 		this.platziereItems(this.landkarte, maxItems);
 		this.platziereMonster(this.landkarte, maxMonster);
 		spieler.setAktuellerRaum(this.landkarte.getZufaelligenRaum());
-		return this.landkarte;
+        spieler.gegenstandAufnehmen(new Gegenstand("Heiltrank", "ein leckerer Heiltrank", 0.5));
+        spieler.gegenstandAufnehmen(new Gegenstand("Heiltrank", "ein leckerer Heiltrank", 0.5));
+        spieler.gegenstandAufnehmen(new Gegenstand("Heiltrank", "ein leckerer Heiltrank", 0.5));
+        return this.landkarte;
 	}
 	
 	/**
 	 * @Autor Pfaus
-	 * Generiert zufällig Raeume und Gaenge und fuegt sie der Karte hinzu
+	 * Generiert zufï¿½llig Raeume und Gaenge und fuegt sie der Karte hinzu
 	 */
 	private void raeumeGenerieren() {
 		Raum 	aktuellerRaum = null;
@@ -67,7 +71,7 @@ public class LevelGenerator {
 		y 		= ( int ) ( Math.random() * max );
 		max 	= (int)(4 + (Math.random() * 4));
 		
-		// erstellt die groeße des Raumes anhand des zufaelligen Wertes von 'max'
+		// erstellt die groeï¿½e des Raumes anhand des zufaelligen Wertes von 'max'
 		//this.map = new Raum[max][max]; TODO wird schon im ctor erledigt
 		
 		int maxRaeume = 8;//(int) ( Math.random() * 6 );
@@ -92,7 +96,7 @@ public class LevelGenerator {
 	/**
 	 * @param aktuellerRaum der Raum in dem sich der Algorithmus gerade befindet
 	 * @param nachfolgeRaum der Raum der mitgegegeben wird. Kann auch ein Teleporter sein.
-	 * @return den neuen Raum der für den Algorithmus gebraucht wird.
+	 * @return den neuen Raum der fï¿½r den Algorithmus gebraucht wird.
 	 */
 	private Raum addRoomToArray(Raum aktuellerRaum, Raum nachfolgeRaum) {
 		double randRichtung;
@@ -184,7 +188,7 @@ public class LevelGenerator {
 	
 	/**
 	 * @author Pfaus
-	 * Setzt in die Map zufällig Items aus der Gegenstandsliste
+	 * Setzt in die Map zufï¿½llig Items aus der Gegenstandsliste
 	 * @param maxGegenstaende maximale Anzahl an Gegenstaende die auf der Map verteilt werden sollen
 	 */
 	private void platziereItems(Landkarte landkarte, int maxGegenstaende) {

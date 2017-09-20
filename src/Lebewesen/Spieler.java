@@ -57,7 +57,7 @@ public class Spieler extends Lebewesen implements IKampfsystem{
 	
 	public String zeigeStatus()
     {
-    	StringBuilder ergebnis = new StringBuilder("Tragkraft:"+ this.tragkraft+"\nAufgenommene Gegenstände: ");
+    	StringBuilder ergebnis = new StringBuilder("Tragkraft:"+ this.tragkraft+"\nAufgenommene Gegenstï¿½nde: ");
     	if(gegenstaende.isEmpty())
     	{
     		ergebnis.append("keine");
@@ -74,7 +74,11 @@ public class Spieler extends Lebewesen implements IKampfsystem{
     	ergebnis.append("\nZustand: "+aktuellerZustand.toString());
     	return ergebnis.toString();
     }
-	
+
+	public String zeigeZustand() {
+		return "\nZustand: " + aktuellerZustand.toString();
+
+	}
 	public Gegenstand legeGegenstandAb(String name)
 	{
 		for(Gegenstand g: gegenstaende)
@@ -98,9 +102,9 @@ public class Spieler extends Lebewesen implements IKampfsystem{
 		}else if(zahl < 0.9d){ //schwer verletzen
 			lebewesen.starkVerletzen();
 			//System.out.println("Der Gegner wurde schwer verletzt!");
-		}else{ //direkt töten
+		}else{ //direkt tï¿½ten
 			lebewesen.toetlichVerletzen();
-			//System.out.println("Der Gegner wurde tötlich verletzt!");
+			//System.out.println("Der Gegner wurde tï¿½tlich verletzt!");
 		}
 	}
 
@@ -113,7 +117,7 @@ public class Spieler extends Lebewesen implements IKampfsystem{
 	/**
 	 * @author Pfaus
 	 * @return ArrayList mit Gegenstaenden
-	 * Gibt alle Gegenstaende in einer Linked List zurueck, die der Spieler bei sich trägt
+	 * Gibt alle Gegenstaende in einer Linked List zurueck, die der Spieler bei sich trï¿½gt
 	 */
 	public LinkedList<Gegenstand> getAlleGegenstaende()
     {
