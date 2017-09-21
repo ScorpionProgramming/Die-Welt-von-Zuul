@@ -153,7 +153,7 @@ public class Spiel
             showmap(befehl);
         } else if (befehlswort.equalsIgnoreCase("heal")) {
             heilenTrankBenutzen();
-            System.out.println(spieler.zeigeZustand());
+            System.out.println("Du wurdest geheilt."+spieler.zeigeZustand());
         }
         	
         return moechteBeenden;
@@ -351,7 +351,7 @@ public class Spiel
     }
 
     private void heilenTrankBenutzen() {
-        ArrayList<Gegenstand> gegenstaende = spieler.getAktuellerRaum().getAlleGegenstaende();
+        LinkedList<Gegenstand> gegenstaende = spieler.getAlleGegenstaende();
         for (Gegenstand g : gegenstaende) {
             if (g.getName().equalsIgnoreCase("heiltrank")) {
                 spieler.heilen();
