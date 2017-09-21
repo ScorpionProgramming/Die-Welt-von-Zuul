@@ -73,13 +73,18 @@ public class Spiel
         // und führen sie aus, bis das Spiel beendet wird.
                 
         boolean beendet = false;
-        while (! beendet && !spieler.getAktuellerZustand().toString().equals("Tod")) {
+        while (! beendet && !spieler.getAktuellerZustand().toString().equals("Tod") && !(landkarte.getAnzahlMonster() <= 0)) {
             Befehl befehl = parser.liefereBefehl();
             beendet = verarbeiteBefehl(befehl);
         }
         
-        if(spieler.getAktuellerZustand().toString().equals("Tod"))
+        if(spieler.getAktuellerZustand().toString().equals("Tod")) {
         	System.out.println("Sie sind leider gestorben.");
+        }else if(landkarte.getAnzahlMonster() <= 0) {
+        	System.out.println("--- Herzlichen Glueckwunsch ---");
+        	System.out.println("Sie haben das Spiel gewonnen, weil sie Zuul von allen Monstern befreit haben");
+        }
+        
         
         System.out.println("Danke für dieses Spiel. Auf Wiedersehen.");
     }
@@ -91,7 +96,8 @@ public class Spiel
     {
         System.out.println();
         System.out.println("Willkommen zu Zuul!");
-        System.out.println("Zuul ist ein neues, unglaublich langweiliges Spiel.");
+        System.out.println("Zuul ist ein neues, nicht mehr so langweiliges Spiel.");
+        System.out.println("Ziel ist es, alle " + landkarte.getAnzahlMonster() + " Monster in der Welt von Zuul zu bekaempfen.");
         System.out.println("Tippen sie 'help', wenn Sie Hilfe brauchen.");
         System.out.println();
         rauminfoAusgeben();

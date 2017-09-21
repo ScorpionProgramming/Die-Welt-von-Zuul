@@ -70,128 +70,6 @@ public class Landkarte {
 		this.map[x][y] = raum;
 	}
 	
-//	/**
-//	 * Erzeuge alle R‰ume und verbinde ihre Ausg‰nge miteinander.
-//	 */
-//	public void raeumeAnlegen(Spieler spieler)
-//	{
-//		spieler.setAktuellerRaum(this.getZufaelligenRaum());
-//	}
-
-//	/**
-//	 * @Autor Pfaus
-//	 * Generiert zuf‰llig Raeume und Gaenge und fuegt sie der Karte hinzu
-//	 */
-//	private void raeumeGenerieren() {
-//		Raum 	aktuellerRaum = null;
-//				//nachfolgeRaum = null;
-//		int 	i 	= 0;
-////				x = 0, 
-////				y = 0
-//				;
-//		x 		= ( int ) ( Math.random() * max ); 
-//		y 		= ( int ) ( Math.random() * max );
-//		max 	= (int)(4 + (Math.random() * 4));
-//		
-//		
-//		// erstellt die groeﬂe des Raumes anhand des zufaelligen Wertes von 'max'
-//		this.map = new Raum[max][max];
-//		
-//
-//		int maxRaeume = 8;//(int) ( Math.random() * 6 );
-//		while(i <= maxRaeume){
-//
-//			if(i == 0) {
-//				aktuellerRaum = new Teleporter("Raum_"+i);
-//				//raeume.add(aktuellerRaum);
-//				this.map[x][y] = aktuellerRaum;
-//			}
-//			
-//			aktuellerRaum = addRoomToArray(aktuellerRaum, new Raum("Raum_"+i));
-//			i++;
-//		};
-//		//Am ende des Algorthmus einen Teleporter hinzufuegen
-//		//addRoomToArray(aktuellerRaum, new Teleporter("Raum_"+i));
-//		
-//		//this.displayMap();
-//	}
-	
-//	private Raum addRoomToArray(Raum aktuellerRaum, Raum nachfolgeRaum) {
-//		double randRichtung;
-//		
-//		boolean loop_nochmal;
-//		do {
-//			loop_nochmal = false;
-//			//In welche Richtung soll der neue Raum angehangen werden?
-//			//erst richtung herausfinden
-//			//dann schauen ob der Raum noch nicht existiert
-//			randRichtung = Math.random();
-//			if(randRichtung < 0.25d && x+1 < max) {				//ost
-//				if(this.map[x+1][y] == null) {
-//					this.map[x+1][y] = nachfolgeRaum;
-//
-//					aktuellerRaum.setAusgang("east", nachfolgeRaum);
-//					nachfolgeRaum.setAusgang("west", aktuellerRaum);
-//				}else {
-//					nachfolgeRaum = this.map[x+1][y];
-//
-//					aktuellerRaum.setAusgang("east", nachfolgeRaum);
-//					nachfolgeRaum.setAusgang("west", aktuellerRaum);
-//				}
-//				x++;
-//			}else if(randRichtung < 0.5d && y+1 < max){ 						//sued
-//				if(this.map[x][y+1] == null) {
-//					this.map[x][y+1] = nachfolgeRaum;
-//
-//					aktuellerRaum.setAusgang("south", nachfolgeRaum);
-//					nachfolgeRaum.setAusgang("north", aktuellerRaum);
-//				}else {
-//					nachfolgeRaum = this.map[x][y+1];
-//
-//					aktuellerRaum.setAusgang("south", nachfolgeRaum);
-//					nachfolgeRaum.setAusgang("north", aktuellerRaum);
-//				}
-//				y++;
-//			}else if(randRichtung < 0.75d && x-1 >= 0){ 						//west
-//				if(this.map[x-1][y] == null) {
-//					//raeume.add(nachfolgeRaum);
-//					this.map[x-1][y] = nachfolgeRaum;
-//
-//					aktuellerRaum.setAusgang("west", nachfolgeRaum);
-//					nachfolgeRaum.setAusgang("east", aktuellerRaum);
-//				}else {
-//					nachfolgeRaum = this.map[x-1][y];
-//
-//					aktuellerRaum.setAusgang("west", nachfolgeRaum);
-//					nachfolgeRaum.setAusgang("east", aktuellerRaum);
-//				}
-//				x--;
-//			}else if(randRichtung < 1.0d && y-1 >= 0){ 						//norden
-//				if(this.map[x][y-1] == null) {
-//					//raeume.add(nachfolgeRaum);
-//					this.map[x][y-1] = nachfolgeRaum;
-//
-//					aktuellerRaum.setAusgang("north", nachfolgeRaum);
-//					nachfolgeRaum.setAusgang("south", aktuellerRaum);
-//				}else {
-//					nachfolgeRaum = this.map[x][y-1];
-//
-//					aktuellerRaum.setAusgang("north", nachfolgeRaum);
-//					nachfolgeRaum.setAusgang("south", aktuellerRaum);
-//				}
-//				y--;
-//			}else if(aktuellerRaum.getAusgang("north") == null || aktuellerRaum.getAusgang("south") == null || aktuellerRaum.getAusgang("west") == null || aktuellerRaum.getAusgang("east") == null){ //wenn hier, dann muss nochmal neu nach einem weg gesucht werden
-//				loop_nochmal = true;
-//			}
-//
-//		}while(loop_nochmal);
-//
-//		aktuellerRaum = nachfolgeRaum;
-//		nachfolgeRaum = null;
-//		
-//		return aktuellerRaum;
-//	}
-	
 	/**
 	 * @author Pfaus
 	 * Waehlt zufaellig einen Raum aus der Map aus
@@ -220,6 +98,22 @@ public class Landkarte {
 		for(int x = 0; x < this.map.length; x++) {
 			for(int y = 0; y < this.map[x].length; y++) {
 				if(map[x][y] != null) {
+					anzahl++;
+				}
+			}
+		}
+		return anzahl;
+	}
+	
+	/**
+	 * @author Pfaus
+	 * @return
+	 */
+	public int getAnzahlMonster() {
+		int anzahl = 0;
+		for(int x = 0; x < this.map.length; x++) {
+			for(int y = 0; y < this.map[x].length; y++) {
+				if(map[x][y] != null && map[x][y].getMonster() != null) {
 					anzahl++;
 				}
 			}
