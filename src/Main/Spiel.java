@@ -171,11 +171,11 @@ public class Spiel
         System.out.print(this.spieler.getAktuellerRaum().getMonster().getName());
         System.out.println(": " + this.spieler.getAktuellerRaum().getMonster().getAktuellerZustand().toString());
         System.out.println();
-        System.out.print("Das Monster greift dich an");
-        makePause();
         if (this.spieler.getAktuellerRaum().getMonster().getAktuellerZustand().toString().equals("Tod")) {
             this.spieler.getAktuellerRaum().setMonster(null);
     	}else{
+    		System.out.print("Das Monster greift dich an");
+            makePause();
         	this.spieler.getAktuellerRaum().getMonster().angreifen(this.spieler);
     	}
     	System.out.println("Spielerstatus: " + this.spieler.getAktuellerZustand().toString());
