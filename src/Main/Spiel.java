@@ -47,7 +47,7 @@ public class Spiel
     	//landkarte = new Landkarte(5);
         //landkarte.raeumeAnlegen(spieler);
     	
-    	landkarte = levelGen.generate(spieler, 5);
+    	landkarte = levelGen.generate(spieler, 5, 6, 4, 10);
     	
         parser = new Parser();
     }
