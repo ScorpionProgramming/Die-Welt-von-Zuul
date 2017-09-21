@@ -312,7 +312,7 @@ public class Spiel
         if(befehl.gibZweitesWort().equals("Muffin"))
         {
         	// Wir versuchen den Muffin zu essen.
-        	ArrayList<Gegenstand> gegenstaende = spieler.getAktuellerRaum().getAlleGegenstaende();
+        	LinkedList<Gegenstand> gegenstaende = spieler.getAlleGegenstaende();
         	for(Gegenstand g: gegenstaende)
         	{
         		if(g.getName().equals("Muffin"))
@@ -324,7 +324,7 @@ public class Spiel
         		}
         	} 
         }
-        System.out.println("Dieser Raum hat keinen Muffin");
+        System.out.println("Du hast keinen Muffin");
     	
     }
     
