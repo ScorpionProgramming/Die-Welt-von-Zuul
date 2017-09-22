@@ -377,7 +377,7 @@ public class Spiel
                 gegenstaende.remove(g);
                 System.out.print("Heiltrank wird benutzt");
                 makePause();
-                System.out.println("Du hast noch " + zaehltGegenstand("heiltrank") + "Heiltranke!");
+                System.out.println("Du hast noch " + zaehltGegenstand("heiltrank") + " Heiltranke!");
                 return;
             }
         }
