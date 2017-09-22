@@ -26,6 +26,7 @@ public class Befehlswoerter
     /**
      * Pr�fe, ob eine gegebene Zeichenkette ein g�ltiger
      * Befehl ist.
+     * @param eingabe
      * @return 'true', wenn die gegebene Zeichenkette ein g�ltiger
      * Befehl ist, 'false' sonst.
      */

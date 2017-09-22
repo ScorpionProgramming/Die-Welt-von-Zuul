@@ -3,7 +3,7 @@ package Items;
 import Level.Landkarte;
 /**
  * Klasse Karte erweitert Gegenstand und erbtdie attribute "name" "beschreibung" und "gewicht"
- * @Autor Pfaus
+ * @author Pfaus
  */
 public class Karte extends Gegenstand{
 	
@@ -22,7 +22,7 @@ public class Karte extends Gegenstand{
 	}
 	
 	/**
-	 * @Autor Pfaus
+	 * @author Pfaus
 	 * Ausgabe der Karte in der Konsole
 	 */
 	public void displayMap() {

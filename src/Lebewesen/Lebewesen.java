@@ -47,7 +47,7 @@ public class Lebewesen {
 	}
 	/**
 	 * Methode toetlichVerletzen
-	 * Verschlechtert den Zustand als Folge eines Kampfes -> t�tet das Lebewesen auf jeden Fall
+	 * Verschlechtert den Zustand als Folge eines Kampfes - t�tet das Lebewesen auf jeden Fall
 	 */	
 	public void toetlichVerletzen(){
 		aktuellerZustand = aktuellerZustand.toetlichVerletzen();

@@ -16,7 +16,7 @@ public class Landkarte {
 //			max;
 //
 //	//hier alle Gegenstaende anlegen die auf der Map enthalten sein sollen
-//	//wenn eine ein Gegenstand mit einer höhren Wahrscheinlichkeit plaziert werden soll, muss dieser öfter in den Pool hinzugefuegt werden.
+//	//wenn eine ein Gegenstand mit einer hï¿½hren Wahrscheinlichkeit plaziert werden soll, muss dieser ï¿½fter in den Pool hinzugefuegt werden.
 //	Gegenstand gegenstandsPool[] = {
 //			new Gegenstand("Gewehr","ein Maschinengewehr mit 100 Schuss", 9.5),
 //			new Gegenstand("Buch", "ein sehr altes Buch mit Ledereinband", 0.6),
@@ -25,7 +25,7 @@ public class Landkarte {
 //	};
 //
 //	//hier alle Monster hinzufuegen die auf der Map enthalten sein sollen
-//	//wenn eine ein Monster mit einer höhren Wahrscheinlichkeit plaziert werden soll, muss dieser öfter in den Pool hinzugefuegt werden.
+//	//wenn eine ein Monster mit einer hï¿½hren Wahrscheinlichkeit plaziert werden soll, muss dieser ï¿½fter in den Pool hinzugefuegt werden.
 //	Monster monsterPool[] = {
 //		new Monster("Skelett"),
 //		new Monster("Ratte"),
@@ -72,7 +72,7 @@ public class Landkarte {
 	
 	/**
 	 * @author Pfaus
-	 * Waehlt zufaellig einen Raum aus der Map aus
+	 * @return einen zufaellig Raum aus der Map
 	 */
 	public Raum getZufaelligenRaum() {
 		boolean raumOk = false;
@@ -90,8 +90,8 @@ public class Landkarte {
 	
 	
 	/**
-	 * @Autor Pfaus
-	 * Gibt die Anzahl der begehbaren Raume zurueck
+	 * @author Pfaus
+	 * @return die Anzahl der begehbaren Raume zurueck
 	 */
 	public int getAnzahlRaeume() {
 		int anzahl = 0;
@@ -107,7 +107,7 @@ public class Landkarte {
 	
 	/**
 	 * @author Pfaus
-	 * @return
+	 * @return die Anzahl der Monster, die es im Spiel gibt
 	 */
 	public int getAnzahlMonster() {
 		int anzahl = 0;
@@ -122,7 +122,7 @@ public class Landkarte {
 	}
 
 	/**
-	 * @Autor Pfaus
+	 * @author Pfaus
 	 * Ausgabe der Karte in der Konsole
 	 */
 	// TODO muss muss noch zueiner TOString Methode umgewandelt werden
@@ -130,8 +130,8 @@ public class Landkarte {
 		for(int y = 0; y < this.map.length * 3;y++) {
 			for(int x = 0; x < this.map[y/3].length * 3; x++) {
 				if(map[x/3][y/3] != null) { //es ist ein Raum da
-					if(x%3 == 0 || x %3 == 2) { //senkrechte und eckpunkte also + für die Ecken und | für die Senkrechten
-						//wenns kein Linkes oder Rechtes Mittelstück ist ist es eine Ecke
+					if(x%3 == 0 || x %3 == 2) { //senkrechte und eckpunkte also + fï¿½r die Ecken und | fï¿½r die Senkrechten
+						//wenns kein Linkes oder Rechtes Mittelstï¿½ck ist ist es eine Ecke
 						if(y %3 == 1 ) {
 							if(this.map[x/3][y/3].getAusgang("west") != null && x%3 == 0) { //pruefen ob der Raum einen Ausgang nach Westen oder Osten hat um dementsprechend die Zeichen anzupassen
 								System.out.print(" ");
@@ -143,7 +143,7 @@ public class Landkarte {
 						}else {
 							System.out.print("+");
 						}
-					}else if(x %3 == 1) { //wenns aber ein Mittelstück ist dann soll geguckt werden ob es die Mitte ist oder ein Randstück
+					}else if(x %3 == 1) { //wenns aber ein Mittelstï¿½ck ist dann soll geguckt werden ob es die Mitte ist oder ein Randstï¿½ck
 						if(y%3 ==1 && x %3 == 1) //ist die Mitte wenn X und Y Modulo 3 -> 1 ergeben 
 							//pruefen ob der Typ des Raumes ein Teleporter ist, dann auf der Karte mit einem 'T' kennzeichnen
 							if(this.map[x/3][y/3].getClass().getName().equals("Level.Teleporter")) {
@@ -175,7 +175,7 @@ public class Landkarte {
 	
 //	/**
 //	 * @author Pfaus
-//	 * Setzt in die Map zufällig Items aus der Gegenstandsliste
+//	 * Setzt in die Map zufï¿½llig Items aus der Gegenstandsliste
 //	 * @param maxGegenstaende maximale Anzahl an Gegenstaende die auf der Map verteilt werden sollen
 //	 */
 //	private void platziereItems(int maxGegenstaende) {
